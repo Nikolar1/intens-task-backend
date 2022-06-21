@@ -1,0 +1,74 @@
+Create Tables:
+
+CREATE TABLE Candidates (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    fullName VARCHAR(50),
+    dateOfBirth DATE,
+    contactNumber VARCHAR(50),
+    email VARCHAR(50)
+);
+
+CREATE TABLE Skills (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    candidateId INTEGER,
+    skill VARCHAR(50),
+    CONSTRAINT  FOREIGN KEY (candidateId) REFERENCES Candidates (id)
+);
+-----------------------------------------------------------------------------------------------------------------------------------
+
+Add Candidate
+
+
+INSERT INTO Candidates (fullName, dateOfBirth, contactNumber, email) VALUES ("Nikola Radojcic",'2000-05-23 00:00:00',"1234567891","email@gmail.com")
+-----------------------------------------------------------------------------------------------------------------------------------
+
+Add skill
+
+INSERT INTO Skills(candidateId, skill) VALUES (1,"C#")
+-----------------------------------------------------------------------------------------------------------------------------------
+Change skill
+
+UPDATE Skills SET skill="MySql" WHERE id=2
+-----------------------------------------------------------------------------------------------------------------------------------
+Delete Skill
+
+DELETE FROM Skills WHERE id=2
+-----------------------------------------------------------------------------------------------------------------------------------
+Delete Candidate
+
+DELETE FROM Skills WHERE candidateId=3;
+DELETE FROM Candidates WHERE id=3
+
+-----------------------------------------------------------------------------------------------------------------------------------
+Select by skill
+
+SELECT DISTINCT p.id, fullName, dateOfBirth, contactNumber, email FROM Candidates p, Skills s WHERE p.id=s.candidateId AND s.skill="C#"
+
+-----------------------------------------------------------------------------------------------------------------------------------
+Select by skills
+
+SELECT DISTINCT p.id, fullName, dateOfBirth, contactNumber, email FROM Candidates p, Skills s WHERE p.id=s.candidateId AND (s.skill="C" OR s.skill="C#")
+
+-----------------------------------------------------------------------------------------------------------------------------------
+Select by skills and name
+ 
+SELECT DISTINCT p.id, fullName, dateOfBirth, contactNumber, email FROM Candidates p, Skills s WHERE p.id=s.candidateId AND (s.skill="C" OR s.skill="C#") AND fullName="Nikola Radojcic"
+
+-----------------------------------------------------------------------------------------------------------------------------------
+Select by name
+
+SELECT id, fullName, dateOfBirth, contactNumber, email FROM Candidates WHERE fullName="Nikola Radojcic"
+
+-----------------------------------------------------------------------------------------------------------------------------------
+Select next 10 candidates
+
+SELECT * FROM Candidates LIMIT 10
+
+-----------------------------------------------------------------------------------------------------------------------------------
+Select all skills
+
+SELECT * FROM Skills
+
+-----------------------------------------------------------------------------------------------------------------------------------
+Select all skills of one candidate
+SELECT skill  FROM  Skills  WHERE candidateId=1
